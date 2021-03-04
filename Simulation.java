@@ -20,8 +20,8 @@ public class Simulation
      */
     
     //Simulations must store:
-    //Settings, passed to it by Slap21SimMain and with the same content.
-    HashMap<String, Integer> settings = new HashMap<String, Integer>();
+    //Settings, passed to it by Slap21SimMain and with the same content. will be initialized in constructor.
+    int[] settings;
     //An Array of Humans. This will be initialised with whatever is set for human count.
     int[] HumanArray;
     //A count of the total infected humans

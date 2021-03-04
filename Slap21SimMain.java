@@ -1,6 +1,6 @@
+
 import java.util.HashMap;
 import java.util.Scanner;
-
 /**
  *
  * Jeb Dudfield
@@ -20,8 +20,8 @@ public class Slap21SimMain
      */
 
     //Slap21SimMain must store:
-    //The settings as a String, int hashmap.
-    static HashMap<String, Integer> settings = new HashMap<String, Integer>();
+    //The settings as an int array.
+    static int[] settings = new int[]{100,100,30,1,100,10,10,200};
     /*The settings stored,their default values, and their bounds are:
      *Simulation x size: 100 : Greater than 0
      *Simulation y size: 100 : Greater than 0
@@ -33,18 +33,15 @@ public class Slap21SimMain
      *Simulation duration: Twice the x axis, if size is default then 200. : Greater than 0
      */
     //A scanner for reading/writing to settings.txt
-    Scanner readWrite;
+    static Scanner readWrite;
+    //A scanner for keyboard input.
+    static Scanner kb = new Scanner(System.in);
     //A empty Simulation object to fill with the currently running simulation
-    Simulation currentSim;
-
-    public Slap21SimMain()
-    {
-
+    static Simulation currentSim;
+    
+    static void main(){
+        
     }
-
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return y;
-    }
+    
+    
 }
