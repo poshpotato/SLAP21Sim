@@ -76,4 +76,17 @@ public class Slap21Sim
             return getInput(request);
         }
     }
+    
+    static void displaySettingsMenu(){
+        System.out.println("Settings");
+        System.out.println("");
+        System.out.println("1: Simulation X Area = " + settings[0]);
+        System.out.println("2: Simulation Y Area = " + settings[1]);
+        System.out.println("3: Simulation Population = " + settings[2]);
+        System.out.println("4: Initial Infected Population = " + settings[3]);
+        System.out.println("5: Chance Of Infection = " + settings[4] + "%");
+        System.out.println("6: Duration Of Infection = " + settings[5] + " rounds");
+        System.out.println("7: Duration Of Recovery = " + settings[6] + " rounds");
+        System.out.println("8: Simulation Duration = " + settings[7] + " rounds");
+    }
 }
