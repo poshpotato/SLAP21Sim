@@ -1,4 +1,4 @@
-
+import java.util.HashMap;
 /**
  * 
  * Jeb Dudfield
@@ -18,6 +18,15 @@ public class Simulation
      * Storing statistics
      * Printing statistics
      */
+    
+    //Simulations must store:
+    //Settings, passed to it by Slap21SimMain and with the same content.
+    HashMap<String, Integer> settings = new HashMap<String, Integer>();
+    //An Array of Humans. This will be initialised with whatever is set for human count.
+    int[] HumanArray;
+    //A count of the total infected humans
+    int totalInfected;
+    //A per-round count of infections, recoveries, current infected, current immune, current uninfected. This will be a temporary variable inside the round method(s).
     public Simulation()
     {
         
