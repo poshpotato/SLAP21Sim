@@ -107,6 +107,19 @@ public class Human
         }
     }
     
+    
+    //this method takes an int[][] of infected spaces and returns nothing.
+    //It is responsible for infecting any human who calls this and is on an infected space.
+    public void checkInfection(int[][] infectedSpaces){
+        for(int i=0; i<infectedSpaces.length-1; i++){
+            if(infectedSpaces[i][0] == x && infectedSpaces[i][1] == y){
+                //if The space the Human is on is infected:
+                this.infectionCount = parentSim.settings[5];
+                return;
+            }
+        }
+    }
+    
     //this method takes nothing and returns an boolean[] representing the human's status.
     /*
      * 0: infected: bool, true/false
