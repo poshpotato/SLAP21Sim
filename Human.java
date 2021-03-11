@@ -33,11 +33,13 @@ public class Human
     
     //It must have a reference to its parent simulation.
     Simulation parentSim;
+    //TODO: revamp class with reference to parent simulation.
+    errorsoidontforgettheabove;
     
     //A human, when created, needs x, y, direction, and infection count set at minimum.
     
-    //If all parameters specified. Generally for use in testing to ensure collisions.
-    public Human(Simulation parentSim, int x, int y, int maxX, int maxY, int direction, int infectionCount){
+    //If all parameters specified. Generally for use in testing.
+    public Human(Simulation parentSim, int x, int y, int direction, int infectionCount){
         this.x = x;
         this.y = y;
         this.direction = direction % 4;
@@ -47,30 +49,29 @@ public class Human
     
     //Random uninfected generation with parameters.
     
-    public Human(Simulation parentSim, int maxX, int maxY){
+    public Human(Simulation parentSim){
         Random rand = new Random();
-        this.x = rand.nextInt(maxX);
-        this.y = rand.nextInt(maxY);
+        this.x = rand.nextInt(parentSim.settings[0]);
+        this.y = rand.nextInt(parentSim.settings[1]);
         this.direction = rand.nextInt(4);
         //printDebugStats();
     }
     
     //Random infected generation with parameters.
-    
-    public Human(Simulation parentSim, int maxX, int maxY, int infectionCount){
+    public Human(Simulation parentSim,int infectionCount){
         Random rand = new Random();
-        this.x = rand.nextInt(maxX);
-        this.y = rand.nextInt(maxY);
+        this.x = rand.nextInt(parentSim.settings[0]);
+        this.y = rand.nextInt(parentSim.settings[1]);
         this.direction = rand.nextInt(4);
         this.infectionCount = infectionCount;
         //printDebugStats();
     }
     
-    //This method takes two integers from the simulation to check boundaries and adjusts the humans position.
+    //This method adjusts the humans position.
     public void move(int maxX, int maxY){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
-        if(x == maxX-1 || y == maxY-1 || x == 0 || y == 0)direction = (direction+2)%4;
+        if(x == parentSim.settings[0]-1 || y == parentSim.settings[1]-1 || x == 0 || y == 0)direction = (direction+2)%4;
         switch(direction){
             case 0:
                 //north.
@@ -95,8 +96,8 @@ public class Human
         }
     }
     
-    //This method takes an integer for the simulations max recovery time and returns a boolean representing whether the human is infected.
-    public boolean updateTimers(int simRecoverySetting){
+    //This method updates the human's timers and returns a boolean indicating that their space should be marked infected.
+    public boolean updateTimers(){
         if(recoveryCount > 0){
             recoveryCount--;
         }
@@ -104,7 +105,7 @@ public class Human
             //increment timer
             infectionCount--;
             if(infectionCount == 0){
-                recoveryCount = simRecoverySetting;
+                recoveryCount = parentSim.settings[6];
             }
             return true;
         }
