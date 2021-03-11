@@ -31,15 +31,13 @@ public class Human
     //This used to be a byte to save memory, but problems with random generation forced a change to int.
     int direction = 0;
     
-    //It must have a reference to its parent simulation.
-    Simulation parentSim;
-    //TODO: revamp class with reference to parent simulation.
-    errorsoidontforgettheabove;
+    //It must have a reference to its parent simulation. Initializes with default settings for testing pruposes.
+    Simulation parentSim = new Simulation(new int[]{100,100,30,1,100,10,10,200});
     
     //A human, when created, needs x, y, direction, and infection count set at minimum.
     
-    //If all parameters specified. Generally for use in testing.
-    public Human(Simulation parentSim, int x, int y, int direction, int infectionCount){
+    //If all parameters specified. For use in testing.
+    public Human(int[] testSettings, int x, int y, int direction, int infectionCount){
         this.x = x;
         this.y = y;
         this.direction = direction % 4;
@@ -98,9 +96,6 @@ public class Human
     
     //This method updates the human's timers and returns a boolean indicating that their space should be marked infected.
     public boolean updateTimers(){
-        if(recoveryCount > 0){
-            recoveryCount--;
-        }
         if(infectionCount > 0){
             //increment timer
             infectionCount--;
@@ -108,11 +103,26 @@ public class Human
                 recoveryCount = parentSim.settings[6];
             }
             return true;
+        }else if(recoveryCount > 0){
+            recoveryCount--;
         }
         return false;
     }
     
-    //This method takes a two-dimensional array of infected spaces and checks them against the Human's current x and y positions, and returns true if the human becomes infected.
+    //this method takes nothing and returns an boolean[] representing the human's status.
+    /*
+     * 0: infected: bool, true/false
+     * 1: recovering: bool, true/false
+     * note: both of these being false indicates the Human is normal, so no "normal" element is needed.
+     * 2: becameInfected: whether the Human became infected this turn.
+     * 3: becameRecovered: whether the Human recovered this turn.
+     */
+    public boolean[] reportStatus(){
+        boolean[] status = new boolean[]{(infectionCount > 0),(recoveryCount > 0),(infectionCount == parentSim.settings[5]),(recoveryCount == parentSim.settings[6])};
+        return status;
+    }
+    
+    
     
     //A function to print statistics for a human. for testing purposes.
     /*public void printDebugStats(){
