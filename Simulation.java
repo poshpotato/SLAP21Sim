@@ -33,10 +33,15 @@ public class Simulation
      *6: Recovery time: 10 : Greater than or equal to 0
      *7: Simulation duration: Twice the x axis, if size is default then 200. : Greater than 0
      */
+    
     //An Array of Humans. This will be initialised with whatever is set for human count.
     Human[] HumanArray;
+    
     //A count of the total infected humans
     int totalInfected;
+    
+    //A two dimensional int array to store infected spaces. This will be a temporary variable inside the round method(s).
+    
     //A per-round count of infections, recoveries, current infected, current immune, current uninfected. This will be a temporary variable inside the round method(s).
     public Simulation(int[] settings){
         this.settings = settings;

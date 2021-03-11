@@ -20,8 +20,8 @@ public class Human
 
     //Human must store:
     //The time left for them to infect or recover. 
-    int infectCount= 0;
-    int recoverCount = 0;
+    int infectionCount= 0;
+    int recoveryCount = 0;
 
     //Their x and y positions relative to top-left.
     int x = 0;
@@ -34,11 +34,11 @@ public class Human
     //A human, when created, needs x, y, direction, and infection count set at minimum.
     
     //If all parameters specified. Generally for use in testing to ensure collisions.
-    public Human(int x, int y, int maxX, int maxY, int direction, int infectCount){
+    public Human(int x, int y, int maxX, int maxY, int direction, int infectionCount){
         this.x = x;
         this.y = y;
         this.direction = direction % 4;
-        this.infectCount = infectCount;
+        this.infectionCount = infectionCount;
         //printDebugStats();
     }
     
@@ -54,20 +54,20 @@ public class Human
     
     //Random infected generation with parameters.
     
-    public Human(int maxX, int maxY, int infectCount){
+    public Human(int maxX, int maxY, int infectionCount){
         Random rand = new Random();
         this.x = rand.nextInt(maxX);
         this.y = rand.nextInt(maxY);
         this.direction = rand.nextInt(4);
-        this.infectCount = infectCount;
+        this.infectionCount = infectionCount;
         //printDebugStats();
     }
     
-    //Basic movement. maxX and maxY are stored once in the simulation, so are passed in the method parameters.
+    //This method takes two integers from the simulation to check boundaries and adjusts the humans position.
     public void move(int maxX, int maxY){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
-        if(x == maxX-1 || y == maxY-1)direction = (direction+2)%4;
+        if(x == maxX-1 || y == maxY-1 || x == 0 || y == 0)direction = (direction+2)%4;
         switch(direction){
             case 0:
                 //north.
@@ -92,13 +92,30 @@ public class Human
         }
     }
     
+    //This method takes an integer for the simulations max recovery time and returns a boolean representing whether the human is infected.
+    public boolean updateTimers(int simRecoverySetting){
+        if(recoveryCount > 0){
+            recoveryCount--;
+        }
+        if(infectionCount > 0){
+            //increment timer
+            infectionCount--;
+            if(infectionCount == 0){
+                recoveryCount = simRecoverySetting;
+            }
+            return true;
+        }
+        return false;
+    }
     
+    //This method takes a two-dimensional array of infected spaces and checks them against the Human's current x and y positions, and returns true if the human becomes infected.
     
     //A function to print statistics for a human. for testing purposes.
     /*public void printDebugStats(){
         System.out.println("x: " + x);
         System.out.println("y: " + y);
         System.out.println("direction: " + direction);
-        System.out.println("infectCount: " + infectCount);
+        System.out.println("recoveryCount: " + recoveryCount);
+        System.out.println("infectionCount: " + infectionCount);
     }*/
 }
