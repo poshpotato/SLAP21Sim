@@ -26,10 +26,6 @@ public class Human
     //Their x and y positions relative to top-left.
     int x = 0;
     int y = 0;
-    
-    //The maximum x and y values of the current simulation.
-    int maxX;
-    int maxY;
 
     //The direction they are facing. Starting with 0=up and proceeding clockwise. 0=up,1=right,2=down,3=left. 
     //This used to be a byte to save memory, but problems with random generation forced a change to int.
@@ -66,8 +62,9 @@ public class Human
         this.infectCount = infectCount;
         //printDebugStats();
     }
-
-    public void move(){
+    
+    //Basic movement. maxX and maxY are stored once in the simulation, so are passed in the method parameters.
+    public void move(int maxX, int maxY){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
         if(x == maxX-1 || y == maxY-1)direction = (direction+2)%4;
@@ -83,7 +80,6 @@ public class Human
             case 2:
                 //south.
                 y += 1;
-                
                 break;
             case 3:
                 //west.
