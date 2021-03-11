@@ -94,19 +94,17 @@ public class Human
         }
     }
     
-    //This method updates the human's timers and returns a boolean indicating that their space should be marked infected.
-    public boolean updateTimers(){
+    //This method updates the human's timers.
+    public void updateTimers(){
         if(infectionCount > 0){
             //increment timer
             infectionCount--;
             if(infectionCount == 0){
                 recoveryCount = parentSim.settings[6];
             }
-            return true;
         }else if(recoveryCount > 0){
             recoveryCount--;
         }
-        return false;
     }
     
     //this method takes nothing and returns an boolean[] representing the human's status.
