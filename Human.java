@@ -30,11 +30,14 @@ public class Human
     //The direction they are facing. Starting with 0=up and proceeding clockwise. 0=up,1=right,2=down,3=left. 
     //This used to be a byte to save memory, but problems with random generation forced a change to int.
     int direction = 0;
-
+    
+    //It must have a reference to its parent simulation.
+    Simulation parentSim;
+    
     //A human, when created, needs x, y, direction, and infection count set at minimum.
     
     //If all parameters specified. Generally for use in testing to ensure collisions.
-    public Human(int x, int y, int maxX, int maxY, int direction, int infectionCount){
+    public Human(Simulation parentSim, int x, int y, int maxX, int maxY, int direction, int infectionCount){
         this.x = x;
         this.y = y;
         this.direction = direction % 4;
@@ -44,7 +47,7 @@ public class Human
     
     //Random uninfected generation with parameters.
     
-    public Human(int maxX, int maxY){
+    public Human(Simulation parentSim, int maxX, int maxY){
         Random rand = new Random();
         this.x = rand.nextInt(maxX);
         this.y = rand.nextInt(maxY);
@@ -54,7 +57,7 @@ public class Human
     
     //Random infected generation with parameters.
     
-    public Human(int maxX, int maxY, int infectionCount){
+    public Human(Simulation parentSim, int maxX, int maxY, int infectionCount){
         Random rand = new Random();
         this.x = rand.nextInt(maxX);
         this.y = rand.nextInt(maxY);
