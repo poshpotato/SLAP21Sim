@@ -73,11 +73,18 @@ public class Simulation
             //Infection Marking
             if(humanArray[i].infectionCount > 0){infectedSpaces.add(humanArray[i].infectSpace());}
             //Was used to debug.
+            
             //System.out.println(i);
         }
+        //for debug purposes.
+        //System.out.println(infectedSpaces.get(0)[0] + "" + infectedSpaces.get(0)[1]);
         
-        
-        System.out.println(infectedSpaces.get(0)[0] + infectedSpaces.get(0)[1]);
+        //Infection processing- this happens after infection marking to avoid errors from processing order.
+        for(int i=0; i<humanArray.length;i++){
+            if(humanArray[i].infectionCount == 0 && humanArray[i].recoveryCount == 0){
+                humanArray[i].checkInfection(infectedSpaces);
+            }
+        }
     }
     
     //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
@@ -89,12 +96,14 @@ public class Simulation
     public Human[] initHumans(){
         Human[] tempHumanArray = new Human[settings[2]];
         //creates all uninfected humans
-        for(int i=0;i<settings[2]-1;i++){
+        for(int i=0;i<settings[2]-settings[3];i++){
             tempHumanArray[i] = new Human(this);
         }
-        //create infected human
-        tempHumanArray[settings[2]-1] = new Human(this,settings[5]);
-        if(tempHumanArray.length == settings[2])System.out.println("Test passed");
+        //create infected humans
+        for(int i=0;i<settings[3]&&i<settings[2];i++){
+            tempHumanArray[(settings[2]-1)-i] = new Human(this,settings[5]);
+        }
+        //if(tempHumanArray.length == settings[2])System.out.println("Test passed");
         this.humanArray = tempHumanArray;
         return tempHumanArray;
     }

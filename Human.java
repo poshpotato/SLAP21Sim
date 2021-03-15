@@ -121,7 +121,8 @@ public class Human
     //It used to take an int[][] but as the amount of infected spaces was an unknown this was changed.
     //It is responsible for infecting any human who calls this and is on an infected space.
     public void checkInfection(ArrayList<int[]> infectedSpaces){
-        for(int i=0; i<infectedSpaces.size()-1; i++){
+        for(int i=0; i<infectedSpaces.size(); i++){
+            System.out.println("Checking entry " + i + " on co-ordinates" + infectedSpaces.get(i)[0] +"," + infectedSpaces.get(i)[1]);
             if(infectedSpaces.get(i)[0] == x && infectedSpaces.get(i)[1] == y){
                 //if The space the Human is on is infected:
                 this.infectionCount = parentSim.settings[5];
