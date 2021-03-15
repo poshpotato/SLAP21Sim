@@ -1,8 +1,9 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 /**
  * 
  * Jeb Dudfield
- * 4/03/2021
+ * 15/03/2021
  */
 public class Simulation
 {
@@ -50,7 +51,32 @@ public class Simulation
     //This method takes nothing and processes a round using the Simulations current humanArray
     public void runRound()
     {
+        /* Order of operations for a round:
+         * 1: Movement
+         * 1.1: Timer incrementing (This is technically step 2 but it happens in the same loop as step 1 so.)
+         * 2: Infection marking
+         * 3: Infection processing
+         * 3: Print statistics
+         * This is done with several passes through the humanArray.
+         */
         
+        //it must also keep temporary variables
+        ArrayList<int[]> infectedSpaces = new ArrayList<int[]>();
+        //TODO: implement this properly.
+        
+        //Movement+Timers
+        for(int i=0;i<humanArray.length;i++){
+            humanArray[i].move();
+            humanArray[i].updateTimers();
+            //Was used to debug.
+            //System.out.println(i);
+        }
+        
+        //Infection Marking
+        for(int i=0;i<humanArray.length;i++){
+            if(humanArray[i].infectionCount > 0){infectedSpaces.add(humanArray[i].infectSpace());}
+        }
+        System.out.println(infectedSpaces.get(0)[0] + infectedSpaces.get(0)[1]);
     }
     
     //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
@@ -68,6 +94,7 @@ public class Simulation
         //create infected human
         tempHumanArray[settings[2]-1] = new Human(this,settings[5]);
         if(tempHumanArray.length == settings[2])System.out.println("Test passed");
+        this.humanArray = tempHumanArray;
         return tempHumanArray;
     }
 }

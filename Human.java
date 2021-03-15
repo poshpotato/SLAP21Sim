@@ -1,8 +1,9 @@
 import java.util.Random;
+import java.util.ArrayList;
 /**
  *
  * Jeb Dudfield
- * 11/03/2021
+ * 15/03/2021
  */
 public class Human
 {
@@ -31,8 +32,9 @@ public class Human
     //This used to be a byte to save memory, but problems with random generation forced a change to int.
     int direction = 0;
     
-    //It must have a reference to its parent simulation. Initializes with default settings for testing pruposes.
-    Simulation parentSim = new Simulation(new int[]{100,100,30,1,100,10,10,200});
+    //It must have a reference to its parent simulation. 
+    //Used to initialize with default settings for testing pruposes until this caused recursion.
+    Simulation parentSim;
     
     //A human, when created, needs x, y, direction, and infection count set at minimum.
     
@@ -53,7 +55,7 @@ public class Human
         this.x = rand.nextInt(parentSim.settings[0]);
         this.y = rand.nextInt(parentSim.settings[1]);
         this.direction = rand.nextInt(4);
-        printDebugStats();
+        //printDebugStats();
     }
     
     //Random infected generation with parameters.
@@ -64,11 +66,11 @@ public class Human
         this.y = rand.nextInt(parentSim.settings[1]);
         this.direction = rand.nextInt(4);
         this.infectionCount = infectionCount;
-        printDebugStats();
+        //printDebugStats();
     }
     
     //This method adjusts the humans position.
-    public void move(int maxX, int maxY){
+    public void move(){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
         if(x == parentSim.settings[0]-1 || y == parentSim.settings[1]-1 || x == 0 || y == 0)direction = (direction+2)%4;
@@ -109,12 +111,18 @@ public class Human
         }
     }
     
+    //This method will mark the space the human that calls this is on as infected by returning their coords as an int[]
+    public int[] infectSpace(){
+        return new int[]{x,y};
+    }
     
-    //this method takes an int[][] of infected spaces and returns nothing.
+    
+    //this method takes an ArrayList<int[]> of infected spaces and returns nothing.
+    //It used to take an int[][] but as the amount of infected spaces was an unknown this was changed.
     //It is responsible for infecting any human who calls this and is on an infected space.
-    public void checkInfection(int[][] infectedSpaces){
-        for(int i=0; i<infectedSpaces.length-1; i++){
-            if(infectedSpaces[i][0] == x && infectedSpaces[i][1] == y){
+    public void checkInfection(ArrayList<int[]> infectedSpaces){
+        for(int i=0; i<infectedSpaces.size()-1; i++){
+            if(infectedSpaces.get(i)[0] == x && infectedSpaces.get(i)[1] == y){
                 //if The space the Human is on is infected:
                 this.infectionCount = parentSim.settings[5];
                 return;
@@ -138,11 +146,11 @@ public class Human
     
     
     //A function to print statistics for a human. for testing purposes.
-    public void printDebugStats(){
+    /*public void printDebugStats(){
         System.out.println("x: " + x);
         System.out.println("y: " + y);
         System.out.println("direction: " + direction);
         System.out.println("recoveryCount: " + recoveryCount);
         System.out.println("infectionCount: " + infectionCount);
-    }
+    }*/
 }
