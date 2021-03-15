@@ -35,7 +35,7 @@ public class Simulation
      */
     
     //An Array of Humans. This will be initialised with whatever is set for human count.
-    Human[] HumanArray;
+    Human[] humanArray;
     
     //A count of the total infected humans
     int totalInfected;
@@ -46,10 +46,20 @@ public class Simulation
     public Simulation(int[] settings){
         this.settings = settings;
     }
-  
-    public int sampleMethod(int y)
+    
+    //This method takes nothing and processes a round using the Simulations current humanArray
+    public void runRound()
     {
-        // put your code here
-        return y;
+        
+    }
+    
+    //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
+    public void printStats(){
+    
+    }
+    
+    //This method initializes the simulation with a humanArray based upon its settings.
+    public void initHumans(){
+        
     }
 }
