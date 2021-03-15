@@ -72,7 +72,7 @@ public class Human
     public void move(){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
-        if(x == Human.parentSim.settings[0]-1 || y == Human.parentSim.settings[1]-1 || x == 0 || y == 0)direction = (direction+2)%4;
+        if(((direction==1 || direction == 2)&&(x == Human.parentSim.settings[0]-1 || y == Human.parentSim.settings[1]-1)) || ((direction==0 || direction == 3)&&(x == 0 || y == 0)))direction = (direction+2)%4;
         switch(direction){
             case 0:
                 //north.
