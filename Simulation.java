@@ -45,7 +45,12 @@ public class Simulation
     
     //A per-round count of infections, recoveries, current infected, current immune, current uninfected. This will be a temporary variable inside the round method(s).
     public Simulation(int[] settings){
+        //First! Make sure settings are correct.
         this.settings = settings;
+        //Secondly! Make sure the static reference for humans to this class is correct.
+        Human.parentSim = this;
+        //Thirdly! Initialize humanArray
+        humanArray = initHumans();
     }
     
     //This method takes nothing and processes a round using the Simulations current humanArray
@@ -72,9 +77,9 @@ public class Simulation
             humanArray[i].updateTimers();
             //Infection Marking
             if(humanArray[i].infectionCount > 0){infectedSpaces.add(humanArray[i].infectSpace());}
-            //Was used to debug.
             
-            //System.out.println(i);
+            //Was used to debug.
+            System.out.println(i);
         }
         //for debug purposes.
         //System.out.println(infectedSpaces.get(0)[0] + "" + infectedSpaces.get(0)[1]);
@@ -94,17 +99,21 @@ public class Simulation
     
     //This method returns a humanArray based upon the simulations settings.
     public Human[] initHumans(){
+        //First, make sure the static reference for humans to this class is correct.
+        Human.parentSim = this;
+        //use a temporary array to store humans before returning.
         Human[] tempHumanArray = new Human[settings[2]];
         //creates all uninfected humans
         for(int i=0;i<settings[2]-settings[3];i++){
-            tempHumanArray[i] = new Human(this);
+            tempHumanArray[i] = new Human();
         }
         //create infected humans
         for(int i=0;i<settings[3]&&i<settings[2];i++){
-            tempHumanArray[(settings[2]-1)-i] = new Human(this,settings[5]);
+            tempHumanArray[(settings[2]-1)-i] = new Human(settings[5]);
         }
+        //for debug purposes.
         //if(tempHumanArray.length == settings[2])System.out.println("Test passed");
-        this.humanArray = tempHumanArray;
+        //this.humanArray = tempHumanArray;
         return tempHumanArray;
     }
 }

@@ -33,8 +33,9 @@ public class Human
     int direction = 0;
     
     //It must have a reference to its parent simulation. 
-    //Used to initialize with default settings for testing pruposes until this caused recursion.
-    Simulation parentSim;
+    //Used to initialize with default settings for testing pruposes until this caused recursion. Now does so again as variable was changed to static
+    //Used to be non-static until it was changed to save memory. 
+    static Simulation parentSim = new Simulation(new int[]{100,100,30,1,100,10,10,200});
     
     //A human, when created, needs x, y, direction, and infection count set at minimum.
     
@@ -49,21 +50,19 @@ public class Human
     
     //Random uninfected generation with parameters.
     
-    public Human(Simulation parentSim){
+    public Human(){
         Random rand = new Random();
-        this.parentSim = parentSim;
-        this.x = rand.nextInt(parentSim.settings[0]);
-        this.y = rand.nextInt(parentSim.settings[1]);
+        this.x = rand.nextInt(Human.parentSim.settings[0]);
+        this.y = rand.nextInt(Human.parentSim.settings[1]);
         this.direction = rand.nextInt(4);
         //printDebugStats();
     }
     
     //Random infected generation with parameters.
-    public Human(Simulation parentSim,int infectionCount){
+    public Human(int infectionCount){
         Random rand = new Random();
-        this.parentSim = parentSim;
-        this.x = rand.nextInt(parentSim.settings[0]);
-        this.y = rand.nextInt(parentSim.settings[1]);
+        this.x = rand.nextInt(Human.parentSim.settings[0]);
+        this.y = rand.nextInt(Human.parentSim.settings[1]);
         this.direction = rand.nextInt(4);
         this.infectionCount = infectionCount;
         //printDebugStats();
@@ -73,7 +72,7 @@ public class Human
     public void move(){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
-        if(x == parentSim.settings[0]-1 || y == parentSim.settings[1]-1 || x == 0 || y == 0)direction = (direction+2)%4;
+        if(x == Human.parentSim.settings[0]-1 || y == Human.parentSim.settings[1]-1 || x == 0 || y == 0)direction = (direction+2)%4;
         switch(direction){
             case 0:
                 //north.
@@ -104,7 +103,7 @@ public class Human
             //increment timer
             infectionCount--;
             if(infectionCount == 0){
-                recoveryCount = parentSim.settings[6];
+                recoveryCount = Human.parentSim.settings[6];
             }
         }else if(recoveryCount > 0){
             recoveryCount--;
@@ -122,10 +121,12 @@ public class Human
     //It is responsible for infecting any human who calls this and is on an infected space.
     public void checkInfection(ArrayList<int[]> infectedSpaces){
         for(int i=0; i<infectedSpaces.size(); i++){
-            System.out.println("Checking entry " + i + " on co-ordinates" + infectedSpaces.get(i)[0] +"," + infectedSpaces.get(i)[1]);
+            
+            //Debug purposes
+            //System.out.println("Checking infected space " + i + " on co-ordinates " + infectedSpaces.get(i)[0] +"," + infectedSpaces.get(i)[1]);
             if(infectedSpaces.get(i)[0] == x && infectedSpaces.get(i)[1] == y){
                 //if The space the Human is on is infected:
-                this.infectionCount = parentSim.settings[5];
+                this.infectionCount = Human.parentSim.settings[5];
                 return;
             }
         }
@@ -140,7 +141,7 @@ public class Human
      * 3: becameRecovered: whether the Human recovered this turn.
      */
     public boolean[] reportStatus(){
-        boolean[] status = new boolean[]{(infectionCount > 0),(recoveryCount > 0),(infectionCount == parentSim.settings[5]),(recoveryCount == parentSim.settings[6])};
+        boolean[] status = new boolean[]{(infectionCount > 0),(recoveryCount > 0),(infectionCount == Human.parentSim.settings[5]),(recoveryCount == Human.parentSim.settings[6])};
         return status;
     }
     
