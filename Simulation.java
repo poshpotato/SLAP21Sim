@@ -53,9 +53,9 @@ public class Simulation
     {
         /* Order of operations for a round:
          * 1: Movement
-         * 1.1: Timer incrementing (This is technically step 2 but it happens in the same loop as step 1 so.)
-         * 2: Infection marking
-         * 3: Infection processing
+         * 1.1: Timer incrementing (This is technically step 2 but it happens in the same loop as step 1, so it is included.)
+         * 1.2: Infection marking (See above.)
+         * 2: Infection processing
          * 3: Print statistics
          * This is done with several passes through the humanArray.
          */
@@ -66,16 +66,17 @@ public class Simulation
         
         //Movement+Timers
         for(int i=0;i<humanArray.length;i++){
+            //movement
             humanArray[i].move();
+            //timer incrementing.
             humanArray[i].updateTimers();
+            //Infection Marking
+            if(humanArray[i].infectionCount > 0){infectedSpaces.add(humanArray[i].infectSpace());}
             //Was used to debug.
             //System.out.println(i);
         }
         
-        //Infection Marking
-        for(int i=0;i<humanArray.length;i++){
-            if(humanArray[i].infectionCount > 0){infectedSpaces.add(humanArray[i].infectSpace());}
-        }
+        
         System.out.println(infectedSpaces.get(0)[0] + infectedSpaces.get(0)[1]);
     }
     
