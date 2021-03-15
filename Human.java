@@ -49,20 +49,22 @@ public class Human
     
     public Human(Simulation parentSim){
         Random rand = new Random();
+        this.parentSim = parentSim;
         this.x = rand.nextInt(parentSim.settings[0]);
         this.y = rand.nextInt(parentSim.settings[1]);
         this.direction = rand.nextInt(4);
-        //printDebugStats();
+        printDebugStats();
     }
     
     //Random infected generation with parameters.
     public Human(Simulation parentSim,int infectionCount){
         Random rand = new Random();
+        this.parentSim = parentSim;
         this.x = rand.nextInt(parentSim.settings[0]);
         this.y = rand.nextInt(parentSim.settings[1]);
         this.direction = rand.nextInt(4);
         this.infectionCount = infectionCount;
-        //printDebugStats();
+        printDebugStats();
     }
     
     //This method adjusts the humans position.
@@ -136,11 +138,11 @@ public class Human
     
     
     //A function to print statistics for a human. for testing purposes.
-    /*public void printDebugStats(){
+    public void printDebugStats(){
         System.out.println("x: " + x);
         System.out.println("y: " + y);
         System.out.println("direction: " + direction);
         System.out.println("recoveryCount: " + recoveryCount);
         System.out.println("infectionCount: " + infectionCount);
-    }*/
+    }
 }

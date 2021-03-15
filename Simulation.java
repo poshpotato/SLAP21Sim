@@ -58,8 +58,16 @@ public class Simulation
     
     }
     
-    //This method initializes the simulation with a humanArray based upon its settings.
-    public void initHumans(){
-        
+    //This method returns a humanArray based upon the simulations settings.
+    public Human[] initHumans(){
+        Human[] tempHumanArray = new Human[settings[2]];
+        //creates all uninfected humans
+        for(int i=0;i<settings[2]-1;i++){
+            tempHumanArray[i] = new Human(this);
+        }
+        //create infected human
+        tempHumanArray[settings[2]-1] = new Human(this,settings[5]);
+        if(tempHumanArray.length == settings[2])System.out.println("Test passed");
+        return tempHumanArray;
     }
 }
