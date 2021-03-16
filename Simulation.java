@@ -79,7 +79,7 @@ public class Simulation
             if(humanArray[i].infectionCount > 0){infectedSpaces.add(humanArray[i].infectSpace());}
             
             //Was used to debug.
-            System.out.println(i);
+            //System.out.println(i);
         }
         //for debug purposes.
         //System.out.println(infectedSpaces.get(0)[0] + "" + infectedSpaces.get(0)[1]);
@@ -90,11 +90,23 @@ public class Simulation
                 humanArray[i].checkInfection(infectedSpaces);
             }
         }
+        //For infection chance debug purposes
+        /* int infected = 0;
+         * for(int i=0; i<humanArray.length;i++){
+         *     if(humanArray[i].infectionCount > 0){
+         *         infected++;
+         *      }
+         *  }
+         *  System.out.println(infected);
+         */
+        
+        
+        //TODO: process and print statistics.
     }
     
     //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
     public void printStats(){
-    
+        //TODO: Write statistics output code
     }
     
     //This method returns a humanArray based upon the simulations settings.

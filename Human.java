@@ -72,7 +72,19 @@ public class Human
     public void move(){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
-        if(((direction==1 || direction == 2)&&(x == Human.parentSim.settings[0]-1 || y == Human.parentSim.settings[1]-1)) || ((direction==0 || direction == 3)&&(x == 0 || y == 0)))direction = (direction+2)%4;
+        if(
+            ((direction==1 || direction == 2)&&(x == Human.parentSim.settings[0]-1 || y == Human.parentSim.settings[1]-1)) || ((direction==0 || direction == 3)&&(x == 0 || y == 0))
+        ){
+            direction = (direction+2)%4;
+            //and, if by a wall, check that there aren't walls on both sides.
+            if(direction%2 == 0 && Human.parentSim.settings[1] == 1){
+                //if moving up/down and maxY is one (there's one space on the y axis) don't move
+                return;
+            }else{
+                //if moving left/right and maxX is one (there's one space on the x axis) don't move
+                return;
+            }
+        }
         switch(direction){
             case 0:
                 //north.
@@ -125,8 +137,11 @@ public class Human
             //Debug purposes
             //System.out.println("Checking infected space " + i + " on co-ordinates " + infectedSpaces.get(i)[0] +"," + infectedSpaces.get(i)[1]);
             if(infectedSpaces.get(i)[0] == x && infectedSpaces.get(i)[1] == y){
-                //if The space the Human is on is infected:
-                this.infectionCount = Human.parentSim.settings[5];
+                //if The space the Human is on is infected, check infection rate.
+                Random rand = new Random();
+                if(rand.nextInt(100) < Human.parentSim.settings[4]){
+                    this.infectionCount = Human.parentSim.settings[5];
+                }
                 return;
             }
         }
