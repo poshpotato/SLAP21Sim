@@ -55,6 +55,11 @@ public class Simulation
         printStats();
     }
     
+    //This method takes nothing and runs the simulation.
+    public void runSimulation(){
+        
+    }
+    
     //This method takes nothing and processes a round using the Simulations current humanArray
     public void runRound()
     {
@@ -69,7 +74,6 @@ public class Simulation
         
         //it must also keep temporary variables
         ArrayList<int[]> infectedSpaces = new ArrayList<int[]>();
-        //TODO: implement this properly.
         
         //Movement+Timers
         for(int i=0;i<humanArray.length;i++){
@@ -103,11 +107,12 @@ public class Simulation
          */
         
         
-        //TODO: process and print statistics.
+        this.printStats();
     }
     
     //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
-    public void printStats(){
+    //It also modifies the stats as it reads them, so it should only be run once per round.
+    private void printStats(){
         //TODO: Write statistics output code
         
         //Must find and print:
@@ -142,8 +147,10 @@ public class Simulation
             }else if(humanStatArray[1]){
                 //if recovering
                 currentRecovered++;
+            } else{
+                //if neither infected or recovering, you must be uninfected.
+                currentUninfected++;
             }
-            //if neither infected or recovering, you must be uninfected.
             
             //Similarly, if a human became infected and recovered on the same turn only the infection is reported. Due to timers being processed seperately to infection this should not occur.
             if(humanStatArray[2]){
@@ -156,6 +163,21 @@ public class Simulation
             }
         }
         
+        //debug purposes
+        if(currentUninfected + currentInfected + currentRecovered != settings[2]){
+            System.out.println("Incorrect status totals");
+        }
+        
+        
+        
+        System.out.println("Round Stats");
+        System.out.println("Infections: " + roundInfections);
+        System.out.println("Recoveries: " + roundRecoveries);
+        System.out.println("Uninfected: " + currentUninfected);
+        System.out.println("Infected: " + currentInfected);
+        System.out.println("Recovered: " + currentRecovered);
+        System.out.println("Overall Stats");
+        System.out.println("Total Infected: " + totalInfected);
     }
     
     //This method returns a human][ based upon the simulations settings.

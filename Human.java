@@ -33,9 +33,9 @@ public class Human
     int direction = 0;
     
     //It must have a reference to its parent simulation. 
-    //Used to initialize with default settings for testing pruposes until this caused recursion. Now does so again as variable was changed to static
+    //Used to initialize with default settings for testing pruposes until this caused recursion. 
     //Used to be non-static until it was changed to save memory. 
-    static Simulation parentSim = new Simulation(new int[]{100,100,30,1,100,10,10,200});
+    static Simulation parentSim;
     
     //A human, when created, needs x, y, direction, and infection count set at minimum.
     
@@ -72,25 +72,39 @@ public class Human
     public void move(){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
-        System.out.println("New human moving");
         
-        //direction is changed by a switch station which takes the direction and checks whether they're currently next to a wall.
+        //For debug purposes.
+        //System.out.println("Next human");
+        
+        //direction is changed by a switch station which takes the direction and checks whether they're currently next to a wall If they turn, they check again whether they are facing a wall. if so, they do not move.
         switch(direction){
             case 0:
                 //north.
-                if(y==0){direction = (direction+2)%4;}
+                if(y==0){
+                    direction = (direction+2)%4;
+                    if(y == Human.parentSim.settings[1]-1)return;
+                }
                 break;
             case 1:
                 //east.
-                if(x == Human.parentSim.settings[0]-1){direction = (direction+2)%4;}
+                if(x == Human.parentSim.settings[0]-1){
+                    direction = (direction+2)%4;
+                    if(x==0)return;
+                }
                 break;
             case 2:
                 //south.
-                if(y == Human.parentSim.settings[1]-1){direction = (direction+2)%4;}
+                if(y == Human.parentSim.settings[1]-1){
+                    direction = (direction+2)%4;
+                    if(y==0)return;
+                }
                 break;
             case 3:
                 //west.
-                if(x==0){direction = (direction+2)%4;}
+                if(x==0){
+                    direction = (direction+2)%4;
+                    if(x == Human.parentSim.settings[0]-1)return;
+                }
                 break;
             default:
                 //This is in case of an invalid direction. The person will not change direction no matter what.
@@ -122,6 +136,7 @@ public class Human
                 break;
         }
         
+        //For testing purposes. Leave disabled unless testing
         if(x < 0 || y < 0 || x >= Human.parentSim.settings[0]  || y >= Human.parentSim.settings[1]){
             System.out.println("Invalid position:");
             printDebugStats();
