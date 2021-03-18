@@ -136,7 +136,7 @@ public class Human
                 break;
         }
         
-        //For testing purposes. Leave disabled unless testing
+        //For debug purposes. TODO: Disable in final product
         if(x < 0 || y < 0 || x >= Human.parentSim.settings[0]  || y >= Human.parentSim.settings[1]){
             System.out.println("Invalid position:");
             printDebugStats();
@@ -196,7 +196,7 @@ public class Human
     
     
     
-    //A function to print statistics for a human. for testing purposes.
+    //A function to print statistics for a human. for testing purposes. TODO: Disable in final product
     public void printDebugStats(){
         System.out.println("x: " + x);
         System.out.println("y: " + y);

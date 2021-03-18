@@ -164,9 +164,10 @@ public class Simulation
         }
         
         //debug purposes
+        /*
         if(currentUninfected + currentInfected + currentRecovered != settings[2]){
             System.out.println("Incorrect status totals");
-        }
+        }*/
         
         
         
