@@ -49,7 +49,7 @@ public class Simulation
         this.settings = settings;
         //Secondly! Make sure the static reference for humans to this class is correct.
         Human.parentSim = this;
-        //Thirdly! Initialize humanArray
+        //Thirdly! Initialize humanArray. 
         humanArray = initHumans();
         int totalInfected = 0;
         printStats();
@@ -180,10 +180,8 @@ public class Simulation
         System.out.println("Total Infected: " + totalInfected);
     }
     
-    //This method returns a human][ based upon the simulations settings.
+    //This method returns a human[] based upon the simulations settings.
     public Human[] initHumans(){
-        //First, make sure the static reference for humans to this class is correct.
-        Human.parentSim = this;
         //use a temporary array to store humans before returning.
         Human[] tempHumanArray = new Human[settings[2]];
         //creates all uninfected humans
