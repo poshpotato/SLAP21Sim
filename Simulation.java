@@ -38,7 +38,7 @@ public class Simulation
     //An Array of Humans. This will be initialised with whatever is set for human count.
     Human[] humanArray;
     
-    //A count of the total infected humans
+    //A count of the total infected humans. Global because it must be stored between rounds.
     int totalInfected;
     
     //A two dimensional int array to store infected spaces. This will be a temporary variable inside the round method(s).
@@ -51,6 +51,8 @@ public class Simulation
         Human.parentSim = this;
         //Thirdly! Initialize humanArray
         humanArray = initHumans();
+        int totalInfected = 0;
+        printStats();
     }
     
     //This method takes nothing and processes a round using the Simulations current humanArray
@@ -107,9 +109,56 @@ public class Simulation
     //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
     public void printStats(){
         //TODO: Write statistics output code
+        
+        //Must find and print:
+        //Infections this round
+        int roundInfections = 0;
+        //Recoveries this round
+        int roundRecoveries = 0;
+        //Current uninfected
+        //Note: This is later derived from the numbers of infected and recovering, to save time and effort.
+        int currentUninfected = 0;
+        //Current infected
+        int currentInfected = 0;
+        //Current recovered
+        int currentRecovered = 0;
+        
+        for(int i = 0; i<humanArray.length;i++){
+            //For every human, check their status and change stats accordingly.
+            boolean[] humanStatArray = humanArray[i].reportStatus();
+            //report status returns a boolean[] of length 4
+            /*
+             * 0: infected: bool, true/false
+             * 1: recovering: bool, true/false
+             * note: both of these being false indicates the Human is normal, so no "normal" element is needed.
+             * 2: becameInfected: whether the Human became infected this turn.
+             * 3: becameRecovered: whether the Human recovered this turn.
+             */
+            //note: if both infected and recovering are true, the human will only be reported as infected as being recovering will not affect the simulation.
+            //This is because infected humans are immune to being infected, and when the infection runs out recovery is reset to its max value anyway.
+            if(humanStatArray[0]){
+                //if infected
+                currentInfected++;
+            }else if(humanStatArray[1]){
+                //if recovering
+                currentRecovered++;
+            }
+            //if neither infected or recovering, you must be uninfected.
+            
+            //Similarly, if a human became infected and recovered on the same turn only the infection is reported. Due to timers being processed seperately to infection this should not occur.
+            if(humanStatArray[2]){
+                //if the human was infected this round
+                roundInfections++;
+                totalInfected++;
+            } else if(humanStatArray[3]){
+                //if the human recovered this round
+                roundRecoveries++;
+            }
+        }
+        
     }
     
-    //This method returns a humanArray based upon the simulations settings.
+    //This method returns a human][ based upon the simulations settings.
     public Human[] initHumans(){
         //First, make sure the static reference for humans to this class is correct.
         Human.parentSim = this;

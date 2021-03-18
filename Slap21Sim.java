@@ -91,8 +91,8 @@ public class Slap21Sim
             System.out.println("6: Duration Of Infection = " + settings[5] + " rounds");
             System.out.println("7: Duration Of Recovery = " + settings[6] + " rounds");
             System.out.println("8: Simulation Duration = " + settings[7] + " rounds");
-            System.out.println("9: Reset to default");
-            System.out.println("0: Return to menu");
+            System.out.println("9: Reset to Default Settings");
+            System.out.println("0: Return to Main Menu");
             int tempInput = getInput("Please type the number of the setting you want to change, 9 to reset to default settings, or 0 to exit.");
             switch(tempInput){
                 case 1:

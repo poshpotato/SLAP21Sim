@@ -72,19 +72,33 @@ public class Human
     public void move(){
         //This will run every round.
         //Check if by wall and change direction, check direction and adjust x and y values.
-        if(
-            ((direction==1 || direction == 2)&&(x == Human.parentSim.settings[0]-1 || y == Human.parentSim.settings[1]-1)) || ((direction==0 || direction == 3)&&(x == 0 || y == 0))
-        ){
-            direction = (direction+2)%4;
-            //and, if by a wall, check that there aren't walls on both sides.
-            if(direction%2 == 0 && Human.parentSim.settings[1] == 1){
-                //if moving up/down and maxY is one (there's one space on the y axis) don't move
-                return;
-            }else{
-                //if moving left/right and maxX is one (there's one space on the x axis) don't move
-                return;
-            }
+        System.out.println("New human moving");
+        
+        //direction is changed by a switch station which takes the direction and checks whether they're currently next to a wall.
+        switch(direction){
+            case 0:
+                //north.
+                if(y==0){direction = (direction+2)%4;}
+                break;
+            case 1:
+                //east.
+                if(x == Human.parentSim.settings[0]-1){direction = (direction+2)%4;}
+                break;
+            case 2:
+                //south.
+                if(y == Human.parentSim.settings[1]-1){direction = (direction+2)%4;}
+                break;
+            case 3:
+                //west.
+                if(x==0){direction = (direction+2)%4;}
+                break;
+            default:
+                //This is in case of an invalid direction. The person will not change direction no matter what.
+                System.out.println("Invalid Direction");
+                break;
         }
+        
+        
         switch(direction){
             case 0:
                 //north.
@@ -106,6 +120,11 @@ public class Human
                 //This is in case of an invalid direction. The person will not move.
                 System.out.println("Invalid direction: " + direction + ".");
                 break;
+        }
+        
+        if(x < 0 || y < 0 || x >= Human.parentSim.settings[0]  || y >= Human.parentSim.settings[1]){
+            System.out.println("Invalid position:");
+            printDebugStats();
         }
     }
     
@@ -147,7 +166,7 @@ public class Human
         }
     }
     
-    //this method takes nothing and returns an boolean[] representing the human's status.
+    //this method takes nothing and returns an boolean[] of length 4 representing the human's status.
     /*
      * 0: infected: bool, true/false
      * 1: recovering: bool, true/false
@@ -163,11 +182,11 @@ public class Human
     
     
     //A function to print statistics for a human. for testing purposes.
-    /*public void printDebugStats(){
+    public void printDebugStats(){
         System.out.println("x: " + x);
         System.out.println("y: " + y);
         System.out.println("direction: " + direction);
         System.out.println("recoveryCount: " + recoveryCount);
         System.out.println("infectionCount: " + infectionCount);
-    }*/
+    }
 }
