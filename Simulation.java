@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Date;
 /**
  * 
  * Jeb Dudfield
@@ -82,7 +83,11 @@ public class Simulation
             //timer incrementing.
             humanArray[i].updateTimers();
             //Infection Marking
-            if(humanArray[i].infectionCount > 0){infectedSpaces.add(humanArray[i].infectSpace());}
+            if(humanArray[i].infectionCount > 0){
+                if(!infectedSpaces.contains(humanArray[i].infectSpace())){
+                infectedSpaces.add(humanArray[i].infectSpace());
+            }
+            }
             
             //Was used to debug.
             //System.out.println(i);
@@ -106,15 +111,12 @@ public class Simulation
          *  System.out.println(infected);
          */
         
-        
         this.printStats();
     }
     
     //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
     //It also modifies the stats as it reads them, so it should only be run once per round.
     private void printStats(){
-        //TODO: Write statistics output code
-        
         //Must find and print:
         //Infections this round
         int roundInfections = 0;
@@ -152,7 +154,7 @@ public class Simulation
                 currentUninfected++;
             }
             
-            //Similarly, if a human became infected and recovered on the same turn only the infection is reported. Due to timers being processed seperately to infection this should not occur.
+            //Similarly, if a human became infected and recovered on the same turn only the infection is reported. Due to timers being processed before infection this should not occur.
             if(humanStatArray[2]){
                 //if the human was infected this round
                 roundInfections++;
