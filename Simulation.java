@@ -71,6 +71,7 @@ public class Simulation
             printStats(i+1);
         }
         
+        System.out.println("===========================");
         System.out.println("Simulation over.");
         System.out.println("Run again, or exit to menu.");
         System.out.println("1: Run again");
@@ -197,7 +198,7 @@ public class Simulation
         }*/
         
         
-        
+        System.out.println("===========================");
         System.out.println("Round " + roundNum + " Stats");
         System.out.println("Infections: " + roundInfections);
         System.out.println("Recoveries: " + roundRecoveries);
@@ -205,7 +206,7 @@ public class Simulation
         System.out.println("Infected: " + currentInfected);
         System.out.println("Recovered: " + currentRecovered);
         System.out.println("Overall Stats");
-        System.out.println("Total Infected: " + totalInfected);
+        System.out.println("Total Infections Experienced: " + totalInfected);
     }
     
     //This method returns a human[] based upon the simulations settings.
