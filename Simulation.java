@@ -4,7 +4,7 @@ import java.util.Date;
 /**
  * 
  * Jeb Dudfield
- * 15/03/2021
+ * 25/03/2021
  */
 public class Simulation
 {
@@ -46,19 +46,30 @@ public class Simulation
     
     //A per-round count of infections, recoveries, current infected, current immune, current uninfected. This will be a temporary variable inside the round method(s).
     public Simulation(int[] settings){
-        //First! Make sure settings are correct.
+        //Make sure settings are correct.
         this.settings = settings;
-        //Secondly! Make sure the static reference for humans to this class is correct.
+        //Make sure the static reference for humans to this class is correct.
         Human.parentSim = this;
-        //Thirdly! Initialize humanArray. 
-        humanArray = initHumans();
-        int totalInfected = 0;
-        printStats();
     }
     
     //This method takes nothing and runs the simulation.
     public void runSimulation(){
+        //First, setup.
+        //Initialize humanArray. 
+        humanArray = initHumans();
+        //Reset totalInfected stat.
+        int totalInfected = 0;
+        //Print initial stats. This covers the starting infected.
+        this.printStats(0);
         
+        //Secondly, run round.
+        for(int i=0; i<this.settings[7];i++){
+            //We do the actual processing and then the statistics printing seperately. This is so we can use the for loop to track rounds.
+            runRound();
+            
+            //Statistics printing takes place after the round is processed so it can reflect accurate statistics
+            printStats(i+1);
+        }
     }
     
     //This method takes nothing and processes a round using the Simulations current humanArray
@@ -110,15 +121,14 @@ public class Simulation
          *  }
          *  System.out.println(infected);
          */
-        
-        this.printStats();
     }
     
     //This method will eventually take several integers representing the statistics for a round, and use those statistics to output a round summary.
     //It also modifies the stats as it reads them, so it should only be run once per round.
-    private void printStats(){
+    public void printStats(int roundNum){
         //Must find and print:
         //Infections this round
+        
         int roundInfections = 0;
         //Recoveries this round
         int roundRecoveries = 0;
@@ -173,7 +183,7 @@ public class Simulation
         
         
         
-        System.out.println("Round Stats");
+        System.out.println("Round " + roundNum + " Stats");
         System.out.println("Infections: " + roundInfections);
         System.out.println("Recoveries: " + roundRecoveries);
         System.out.println("Uninfected: " + currentUninfected);
