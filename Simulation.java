@@ -58,7 +58,7 @@ public class Simulation
         //Initialize humanArray. 
         humanArray = initHumans();
         //Reset totalInfected stat.
-        int totalInfected = 0;
+        totalInfected = 0;
         //Print initial stats. This covers the starting infected.
         this.printStats(0);
         
@@ -69,6 +69,21 @@ public class Simulation
             
             //Statistics printing takes place after the round is processed so it can reflect accurate statistics
             printStats(i+1);
+        }
+        
+        System.out.println("Simulation over.");
+        System.out.println("Run again, or exit to menu.");
+        System.out.println("1: Run again");
+        System.out.println("2: Exit to menu");
+        switch(Slap21Sim.getInput("")){
+            case 1:
+                this.runSimulation();
+                break;
+            case 2:
+                return;
+            default:
+                System.out.println("Invalid Option selected.");
+                break;
         }
     }
     

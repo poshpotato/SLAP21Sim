@@ -52,6 +52,9 @@ public class Slap21Sim
             switch(getInput("Please type the number of the option you want to select.")){
                 case 1:
                 System.out.println("TODO: Run simulation with current settings here.");
+                System.out.println("Running simulation...");
+                currentSim = new Simulation(settings);
+                currentSim.runSimulation();
                 break;
                 case 2:
                 displaySettingsMenu();

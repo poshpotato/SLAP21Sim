@@ -137,10 +137,10 @@ public class Human
         }
         
         //For debug purposes. TODO: Disable in final product
-        if(x < 0 || y < 0 || x >= Human.parentSim.settings[0]  || y >= Human.parentSim.settings[1]){
+        /*if(x < 0 || y < 0 || x >= Human.parentSim.settings[0]  || y >= Human.parentSim.settings[1]){
             System.out.println("Invalid position:");
             printDebugStats();
-        }
+        }*/
     }
     
     //This method updates the human's timers.
@@ -197,11 +197,11 @@ public class Human
     
     
     //A function to print statistics for a human. for testing purposes. TODO: Disable in final product
-    public void printDebugStats(){
+    /*public void printDebugStats(){
         System.out.println("x: " + x);
         System.out.println("y: " + y);
         System.out.println("direction: " + direction);
         System.out.println("recoveryCount: " + recoveryCount);
         System.out.println("infectionCount: " + infectionCount);
-    }
+    }*/
 }
